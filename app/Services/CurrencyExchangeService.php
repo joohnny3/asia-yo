@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Exception;
+use Throwable;
 
 class CurrencyExchangeService
 {
@@ -13,7 +14,15 @@ class CurrencyExchangeService
         $this->exchangeRates = $exchangeRates;
     }
 
-    public function convert(string $source, string $target, string $amount): ?string
+    /**
+     * 匯率轉換
+     * @param string $source 須轉換的國家代碼
+     * @param string $target 將轉換的國家代碼
+     * @param string $amount 要轉換的金額（可包含逗號）
+     * @return string 格式化後的匯率金額
+     * @throws Throwable 當使用者輸入目前不支援的國家時拋出錯誤
+     */
+    public function convert(string $source, string $target, string $amount): string
     {
         $amount = str_replace(',', '', $amount);
 
