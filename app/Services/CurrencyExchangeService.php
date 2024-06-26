@@ -26,6 +26,10 @@ class CurrencyExchangeService
     {
         $amount = str_replace(',', '', $amount);
 
+        if (!is_numeric($amount)) {
+            throw new Exception("金額格式錯誤：{$amount}，金額必須是有效的數字。");
+        }
+
         if (!isset($this->exchangeRates[$source][$target])) {
             throw new Exception("目前尚未支援的匯率轉換格式：從 {$source} 到 {$target}。");
         }
